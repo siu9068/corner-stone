@@ -1,0 +1,1 @@
+web: java -jar -Dspring.profiles.active=prod ./*.jar -Xms3072M -Xmx5120M

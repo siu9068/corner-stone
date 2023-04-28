@@ -1,0 +1,37 @@
+##SERVER Settings
+server:
+  port: 5000
+  undertow:
+    buffer-size: 1024
+    threads:
+      worker: 8
+
+spring:
+  ## ??? ??
+  profiles:
+    include: secret
+  ##JPA Settings
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        metadata_builder_contributor: kr.cornerstone.config.jpa.MariaCustomDialect
+        format_sql: true
+    generate-ddl: false
+    open-in-view: false
+
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+
+##SWAGGER Settings
+springdoc:
+  swagger-ui:
+    path: /swagger
+
+##Project Security
+jasypt:
+  encryptor:
+    password: ${password}
