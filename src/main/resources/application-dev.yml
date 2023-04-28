@@ -5,3 +5,6 @@ spring:
     url: ENC(dj4rOhQqh84uEe0XuW0+v+pIW4d9g130itQEKoLxYwFC3NnOg1N5bs9yzB8VRcC80Z2HHkmFWhsQMd2nqkY+bunRKZz6Fww/nfKWQUsYfoT1QZD7q5nvBUcepO9fBXJkgFjHuwO5yHz1+AL4VjCVCg==)
     username: ENC(0R4troqKh5MY6zy6Y9hrF5SacYNprCp3)
     password: ENC(MOX3fUC8zzzo7O5jPfGKJuecAQLg/qEA)
+
+server:
+  port: 8080
