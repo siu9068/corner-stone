@@ -17,11 +17,9 @@ public class User extends BaseDateTime{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String orgId;
+    private String email;
 
     private String password;
-
-    private String email;
 
     private String name;
 
@@ -33,4 +31,10 @@ public class User extends BaseDateTime{
     private String appleId;
 
     private Boolean useFlag;
+
+    private String refreshToken;
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 }

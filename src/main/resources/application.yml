@@ -7,7 +7,7 @@ server:
       worker: 8
 
 spring:
-  ## ??? ??
+  ## 프로필 추가
   profiles:
     include: secret
   ##JPA Settings

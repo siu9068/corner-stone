@@ -10,14 +10,17 @@ import kr.cornerstone.payload.GoogleLoginRequest;
 import kr.cornerstone.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MemberServiceImpl implements MemberService{
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
 
+    @Transactional
     public AuthResponse googleLogin(GoogleLoginRequest googleLoginRequest) {
         User user = userRepository.findByGoogleIdAndUseFlag(googleLoginRequest.getGoogleId(), UseType.USE.getIsUse())
                 .orElseThrow();
@@ -25,9 +28,8 @@ public class MemberServiceImpl implements MemberService{
         String accessToken = jwtUtil.createToken(userPrincipal, TokenType.ACCESS_TOKEN);
         String refreshToken = jwtUtil.createToken(userPrincipal, TokenType.REFRESH_TOKEN);
 
-        /*캐시서버 리프레시토큰 등록*/
-//        redisUtils.setDataExpire(userPrincipal.getUsername(),refreshToken, JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
-
+        user.setRefreshToken(refreshToken);
+        userRepository.save(user);
        return new AuthResponse(accessToken,refreshToken);
     }
 }
