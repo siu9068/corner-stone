@@ -22,8 +22,7 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public AuthResponse tokenRefreshing(RefreshTokenRequest refreshTokenRequest) {
         if (jwtUtil.validateToken(refreshTokenRequest.getRefreshToken(), TokenType.REFRESH_TOKEN)) {
-            Long id = Long.valueOf(jwtUtil.getIdFromToken(refreshTokenRequest.getRefreshToken(), TokenType.REFRESH_TOKEN));
-            User user = userRepository.findByIdAndUseFlag(id, UseType.USE.getIsUse())
+            User user = userRepository.findByRefreshTokenAndUseFlag(refreshTokenRequest.getRefreshToken(), UseType.USE.getIsUse())
                     .orElseThrow();
             return getAuthResponse(user, jwtUtil, userRepository);
         }

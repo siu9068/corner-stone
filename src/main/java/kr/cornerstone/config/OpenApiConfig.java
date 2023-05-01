@@ -24,7 +24,7 @@ public class OpenApiConfig {
 
         OpenApiCustomizer openApiCustomizer = (openAPI) -> openAPI.info(info);
 
-        String[] paths = {"/token/**", "/v1/**"};
+        String[] paths = {"/auth/**", "/v1/**"};
 
         return GroupedOpenApi.builder().group("Corner Stone API_v1").pathsToMatch(paths).addOpenApiCustomizer(openApiCustomizer)
                 .build();

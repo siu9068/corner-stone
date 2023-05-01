@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User,Long> {
     Optional<User> findByIdAndUseFlag(Long id,Boolean useFlag);
-
+    Optional<User> findByRefreshTokenAndUseFlag(String refreshToken, Boolean useFlag);
     Optional<User> findByGoogleIdAndUseFlag(String googleId,Boolean useFlag);
 }
