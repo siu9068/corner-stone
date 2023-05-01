@@ -2,9 +2,12 @@ package kr.cornerstone.payload;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Builder
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AuthResponse {
 
     @Schema(description = "액세스토큰")

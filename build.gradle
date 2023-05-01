@@ -59,14 +59,15 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-task zip(type: Zip, dependsOn: bootJar){
-    from("$buildDir/libs"){
+tasks.register('zip', Zip) {
+    dependsOn bootJar
+    from("$buildDir/libs") {
         include "*SNAPSHOT.jar"
     }
-    from(".platform"){
+    from(".platform") {
         into "/.platform"
     }
-    from(".ebextensions"){
+    from(".ebextensions") {
         into "/.ebextensions"
     }
     from("Procfile")

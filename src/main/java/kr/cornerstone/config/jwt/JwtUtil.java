@@ -109,13 +109,8 @@ public class JwtUtil {
     }
 
     /*토큰 아이디조회*/
-    public String getUserIdFromToken(String token) {
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(Keys.hmacShaKeyFor(Decoders.BASE64.decode(ACCESS_SECRET_KEY)))
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-
+    public String getIdFromToken(String token, TokenType tokenType) {
+        Claims claims = parseClaims(token,tokenType);
         return String.valueOf(claims.get("sub"));
     }
 

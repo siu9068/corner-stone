@@ -1,4 +1,4 @@
-package kr.cornerstone.commonApi.health;
+package kr.cornerstone.commonApi.health.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HealthCheckController {
 
     @GetMapping("/health")
-    public ResponseEntity heathCheck(){
+    public ResponseEntity<String> heathCheck(){
         return ResponseEntity.ok("OK");
     }
 }
