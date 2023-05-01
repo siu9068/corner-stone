@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GoogleLoginRequest {
     @NotBlank
-    @Schema(description = "구글 아이디", example = "1234")
+    @Schema(description = "구글 고유 키값", example = "1234")
     private String googleId;
 }

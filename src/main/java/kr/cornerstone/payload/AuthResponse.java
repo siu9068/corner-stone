@@ -6,7 +6,6 @@ import lombok.*;
 
 @Builder
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 public class AuthResponse {
 
@@ -15,7 +14,7 @@ public class AuthResponse {
     @Schema(description = "리프레쉬토큰")
     private String refreshToken;
     @Schema(description = "토큰타입")
-    private String tokenType = "Bearer";
+    private final String tokenType = "Bearer";
 
     public AuthResponse(String accessToken, String refreshToken) {
         this.accessToken = accessToken;
