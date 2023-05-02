@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.cornerstone.commonApi.auth.service.AuthService;
 import kr.cornerstone.payload.AuthResponse;
+import kr.cornerstone.payload.ErrorResponse;
 import kr.cornerstone.payload.RefreshTokenRequest;
 import kr.cornerstone.payload.ResponseCustom;
 import lombok.RequiredArgsConstructor;
@@ -27,14 +28,14 @@ public class AuthController {
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = AuthResponse.class))),
-            @ApiResponse(responseCode = "401", description = "신뢰할수 없는 토큰 (재로그인 진행바람)"),
+            @ApiResponse(responseCode = "401", description = "신뢰할수 없는 토큰 (재로그인 진행바람)",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @Operation(summary = "토큰재발급", description = "만료된 토큰을 재발급합니다.")
     @PostMapping("/refresh")
-    public ResponseEntity tokenRefreshing(@RequestBody RefreshTokenRequest refreshTokenRequest){
+    public ResponseEntity<?> tokenRefreshing(@RequestBody RefreshTokenRequest refreshTokenRequest){
         try {
             AuthResponse authResponse = authService.tokenRefreshing(refreshTokenRequest);
-            return ResponseEntity.status(HttpStatus.CREATED).body(authResponse);
+            return ResponseCustom.of(HttpStatus.CREATED,authResponse);
         } catch (Exception e) {
             return ResponseCustom.ofError(HttpStatus.UNAUTHORIZED,"유효하지 않은 리프레쉬토큰");
         }

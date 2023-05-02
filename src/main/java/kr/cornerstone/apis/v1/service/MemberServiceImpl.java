@@ -6,6 +6,7 @@ import kr.cornerstone.entity.User;
 import kr.cornerstone.enums.UseType;
 import kr.cornerstone.payload.AuthResponse;
 import kr.cornerstone.payload.GoogleLoginRequest;
+import kr.cornerstone.payload.GoogleSignUpRequest;
 import kr.cornerstone.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,18 @@ public class MemberServiceImpl implements MemberService{
     private final UserRepository userRepository;
     private final AuthService authService;
 
+    @Override
     @Transactional
     public AuthResponse googleLogin(GoogleLoginRequest googleLoginRequest) {
         User user = userRepository.findByGoogleIdAndUseFlag(googleLoginRequest.getGoogleId(), UseType.USE.getIsUse())
                 .orElseThrow();
         return authService.getAuthResponse(user, jwtUtil, userRepository);
+    }
+
+    @Override
+    @Transactional
+    public Long googleSignUp(GoogleSignUpRequest googleSignUpRequest) {
+
+        return null;
     }
 }

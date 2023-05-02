@@ -8,10 +8,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.cornerstone.apis.v1.service.MemberService;
-import kr.cornerstone.payload.AuthResponse;
-import kr.cornerstone.payload.GoogleLoginRequest;
+import kr.cornerstone.payload.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,12 +29,28 @@ public class MemberController {
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",content = @Content(array = @ArraySchema(schema = @Schema(implementation = AuthResponse.class)))),
+            @ApiResponse(responseCode = "401", description = "로그인 실패",content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @Operation(summary = "구글 계정 로그인")
     @PostMapping("/google/login")
-    public ResponseEntity<AuthResponse> googleLogin(@RequestBody GoogleLoginRequest googleLoginRequest){
-        AuthResponse authResponse = memberService.googleLogin(googleLoginRequest);
-        return ResponseEntity.ok().body(authResponse);
+    public ResponseEntity<?> googleLogin(@RequestBody GoogleLoginRequest googleLoginRequest){
+        try {
+            AuthResponse authResponse = memberService.googleLogin(googleLoginRequest);
+            return ResponseCustom.of(HttpStatus.OK,authResponse);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseCustom.ofError(HttpStatus.UNAUTHORIZED,"일치하는 회원 정보가 없습니다.");
+        }
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "가입 성공",content = @Content(schema = @Schema(implementation = Long.class))),
+    })
+    @Operation(summary = "구글 계정 회원가입")
+    @PostMapping("/google/signup")
+    public ResponseEntity<?> googleSignUp(@RequestBody GoogleSignUpRequest googleSignUpRequest){
+        Long id = memberService.googleSignUp(googleSignUpRequest);
+        return ResponseCustom.of(HttpStatus.CREATED,id);
     }
 
 }

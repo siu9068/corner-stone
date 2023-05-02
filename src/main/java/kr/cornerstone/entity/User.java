@@ -23,6 +23,8 @@ public class User extends BaseDateTime{
 
     private String name;
 
+    private String birth;
+
     @Enumerated(EnumType.STRING)
     private AuthType authType;
 

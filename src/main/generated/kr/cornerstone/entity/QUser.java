@@ -25,6 +25,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final EnumPath<kr.cornerstone.enums.AuthType> authType = createEnum("authType", kr.cornerstone.enums.AuthType.class);
 
+    public final StringPath birth = createString("birth");
+
     public final StringPath email = createString("email");
 
     public final StringPath googleId = createString("googleId");
