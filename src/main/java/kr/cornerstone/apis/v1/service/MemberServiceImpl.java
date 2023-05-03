@@ -24,7 +24,7 @@ public class MemberServiceImpl implements MemberService{
     @Transactional
     public AuthResponse googleLogin(GoogleLoginRequest googleLoginRequest) {
         User user = userRepository.findByGoogleIdAndUseFlag(googleLoginRequest.getGoogleId(), UseType.USE.getIsUse())
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("일치하는 회원 정보가 없습니다."));
         return authService.getAuthResponse(user, jwtUtil, userRepository);
     }
 

@@ -7,6 +7,5 @@ import kr.cornerstone.payload.GoogleSignUpRequest;
 
 public interface MemberService{
     AuthResponse googleLogin(GoogleLoginRequest googleLoginRequest);
-
     Long googleSignUp(GoogleSignUpRequest googleSignUpRequest);
 }

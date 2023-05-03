@@ -39,7 +39,7 @@ public class MemberController {
             return ResponseCustom.of(HttpStatus.OK,authResponse);
         } catch (Exception e) {
             log.error(e.getMessage());
-            return ResponseCustom.ofError(HttpStatus.UNAUTHORIZED,"일치하는 회원 정보가 없습니다.");
+            return ResponseCustom.ofError(HttpStatus.UNAUTHORIZED,e.getMessage());
         }
     }
 

@@ -26,7 +26,7 @@ public class AuthServiceImpl implements AuthService {
                     .orElseThrow();
             return getAuthResponse(user, jwtUtil, userRepository);
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("유효하지 않은 토큰 정보");
     }
 
     @Transactional
