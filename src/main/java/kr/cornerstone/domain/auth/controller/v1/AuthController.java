@@ -37,7 +37,7 @@ public class AuthController {
             AuthResponse authResponse = authService.tokenRefreshing(refreshTokenRequest);
             return ResponseCustom.of(HttpStatus.CREATED,authResponse);
         } catch (Exception e) {
-            return ResponseCustom.ofError(HttpStatus.UNAUTHORIZED,"유효하지 않은 리프레쉬토큰");
+            return ResponseCustom.ofError(HttpStatus.UNAUTHORIZED,e.getMessage());
         }
     }
 }
