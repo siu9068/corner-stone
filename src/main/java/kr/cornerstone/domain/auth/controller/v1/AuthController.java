@@ -10,7 +10,7 @@ import kr.cornerstone.domain.auth.AuthService;
 import kr.cornerstone.global.payload.AuthResponse;
 import kr.cornerstone.global.payload.ErrorResponse;
 import kr.cornerstone.domain.auth.payload.RefreshTokenRequest;
-import kr.cornerstone.global.payload.ResponseCustom;
+import kr.cornerstone.global.payload.ResponseEntityCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class AuthController {
     private final AuthService authService;
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = AuthResponse.class))),
+            @ApiResponse(responseCode = "201", description = "토큰 재발급 성공", content = @Content(schema = @Schema(implementation = AuthResponse.class))),
             @ApiResponse(responseCode = "401", description = "신뢰할수 없는 토큰 (재로그인 진행바람)",content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @Operation(summary = "토큰재발급", description = "만료된 토큰을 재발급합니다.")
@@ -35,9 +35,9 @@ public class AuthController {
     public ResponseEntity<?> tokenRefreshing(@RequestBody RefreshTokenRequest refreshTokenRequest){
         try {
             AuthResponse authResponse = authService.tokenRefreshing(refreshTokenRequest);
-            return ResponseCustom.of(HttpStatus.CREATED,authResponse);
+            return ResponseEntityCustom.of(HttpStatus.CREATED,authResponse);
         } catch (Exception e) {
-            return ResponseCustom.ofError(HttpStatus.UNAUTHORIZED,e.getMessage());
+            return ResponseEntityCustom.ofError(HttpStatus.UNAUTHORIZED,e.getMessage());
         }
     }
 }

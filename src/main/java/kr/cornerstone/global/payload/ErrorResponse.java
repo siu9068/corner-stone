@@ -15,8 +15,14 @@ import java.time.LocalDateTime;
 @Getter
 public class ErrorResponse {
 
-    @Schema(description = "에러 메세지",example = "원인")
+    @Schema(description = "에러 메세지",
+            requiredMode = Schema.RequiredMode.REQUIRED,
+            example = "원인")
     private String message;
+
+    @Schema(description = "발생 시간",
+            requiredMode = Schema.RequiredMode.REQUIRED,
+            example = "2023-05-24T16:05:01.058Z")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime timestamp = LocalDateTime.now();
 

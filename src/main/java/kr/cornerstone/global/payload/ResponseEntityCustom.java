@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 @NoArgsConstructor
 @Getter
 @Builder
-public class ResponseCustom {
+public class ResponseEntityCustom {
 
     @Schema(description = "결과")
     private Object result;

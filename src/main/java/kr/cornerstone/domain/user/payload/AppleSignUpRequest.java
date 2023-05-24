@@ -5,14 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-public class GoogleSignUpRequest {
-    @Schema(description = "구글아이디",
+public class AppleSignUpRequest {
+    @Schema(description = "애플 아이디",
             requiredMode = Schema.RequiredMode.REQUIRED,
-            example = "1234")
-    private String googleId;
+            example = "5678")
+    private String appleId;
 
     @Schema(description = "이름",
             requiredMode = Schema.RequiredMode.REQUIRED,
