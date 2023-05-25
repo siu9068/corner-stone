@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 public class ErrorResponse {
@@ -24,7 +23,7 @@ public class ErrorResponse {
             requiredMode = Schema.RequiredMode.REQUIRED,
             example = "2023-05-24T16:05:01.058Z")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime timestamp = LocalDateTime.now();
+    private final LocalDateTime timestamp = LocalDateTime.now();
 
     public ErrorResponse(String message) {
         this.message = message;
