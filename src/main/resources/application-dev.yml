@@ -1,12 +1,12 @@
 server:
-  port: 7441
+  port: 8080
 
 spring:
   jpa:
     defer-datasource-initialization: true
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         metadata_builder_contributor: kr.cornerstone.global.config.jpa.MariaCustomDialect
