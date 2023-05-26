@@ -1,6 +1,7 @@
 package kr.cornerstone.domain.user;
 
 import kr.cornerstone.domain.auth.AuthService;
+import kr.cornerstone.domain.user.enums.AuthType;
 import kr.cornerstone.domain.user.payload.AppleLoginRequest;
 import kr.cornerstone.domain.user.payload.AppleSignUpRequest;
 import kr.cornerstone.domain.user.payload.GoogleLoginRequest;
@@ -43,6 +44,7 @@ public class UserServiceImpl implements UserService {
                     .googleId(googleSignUpRequest.getGoogleId())
                     .name(googleSignUpRequest.getName())
                     .birth(googleSignUpRequest.getBirth())
+                    .authType(AuthType.USER)
                     .build();
             userRepository.save(user);
             return user.getId();
@@ -61,6 +63,7 @@ public class UserServiceImpl implements UserService {
                 .appleId(appleSignUpRequest.getAppleId())
                 .name(appleSignUpRequest.getName())
                 .birth(appleSignUpRequest.getBirth())
+                .authType(AuthType.USER)
                 .build();
         userRepository.save(user);
         return user.getId();
