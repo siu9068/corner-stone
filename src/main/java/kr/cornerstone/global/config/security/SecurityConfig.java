@@ -1,5 +1,6 @@
 package kr.cornerstone.global.config.security;
 
+import kr.cornerstone.domain.user.enums.AuthType;
 import kr.cornerstone.global.config.jwt.JwtRequestFilter;
 import kr.cornerstone.global.config.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,9 @@ public class SecurityConfig {
                 .and()
                 // 조건별로 요청 허용/제한 설정
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/swagger-ui/**","/swagger-resources/**","/v3/api-docs/**").permitAll()
+                        .requestMatchers(openURI()).permitAll()
+                        .requestMatchers(userURI()).hasAuthority(AuthType.USER.getCode())
+                        .requestMatchers(adminURI()).hasAuthority(AuthType.ADMIN.getCode())
                         .anyRequest().permitAll()
                 )
                 // JWT 인증 필터 적용
@@ -51,6 +54,34 @@ public class SecurityConfig {
                 .authenticationEntryPoint(customAuthenticationEntryPoint);
         return http.build();
     }
+
+    private String[] openURI() {
+        String[] uris = {
+                "/swagger-ui/**",
+                "/swagger-resources/**",
+                "/v3/api-docs/**",
+                "/api/v1/user/google/sign-in",
+                "/api/v1/user/google/sign-up",
+                "/api/v1/user/apple/sign-in",
+                "/api/v1/user/apple/sign-up"
+        };
+        return uris;
+    }
+
+    private String[] userURI(){
+        String[] uris = {
+               "/api/**"
+        };
+        return uris;
+    }
+
+    private String[] adminURI(){
+        String[] uris = {
+        };
+        return uris;
+    }
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
