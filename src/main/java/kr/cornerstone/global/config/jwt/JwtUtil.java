@@ -40,11 +40,15 @@ public class JwtUtil {
         SecretKey secretKey;
 
         if(tokenType.equals(TokenType.ACCESS_TOKEN)) {
+            String authorities = userPrincipal.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.joining(","));
+
             /*ACCESS_TOKEN*/
             expiryDate = new Date(now.getTime() + ACCESS_TOKEN_VALIDATION_SECOND);
             algorithm = SignatureAlgorithm.HS512;
             secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(ACCESS_SECRET_KEY));
-            claimMap.put(AUTHORITIES_KEY, userPrincipal.getAuthorities());
+            claimMap.put(AUTHORITIES_KEY, authorities);
         }else{
             /*REFRESH_TOKEN*/
             expiryDate = new Date(now.getTime() + REFRESH_TOKEN_VALIDATION_SECOND);
@@ -76,6 +80,9 @@ public class JwtUtil {
                 Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
+
+//        List<GrantedAuthority> authorities = Collections.
+//                singletonList(new SimpleGrantedAuthority(user.getAuthType().toString()));
 
         /*토큰검증을 이미 완료 했기 때문에 DB 조회없이 객체 생성해서 반환*/
         UserPrincipal principal = UserPrincipal.builder()

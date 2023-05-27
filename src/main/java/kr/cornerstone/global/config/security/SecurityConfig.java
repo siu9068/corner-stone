@@ -43,7 +43,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers(openURI()).permitAll()
                         .requestMatchers(userURI()).hasAuthority(AuthType.USER.getCode())
-                        .requestMatchers(adminURI()).hasAuthority(AuthType.ADMIN.getCode())
                         .anyRequest().permitAll()
                 )
                 // JWT 인증 필터 적용
@@ -56,7 +55,7 @@ public class SecurityConfig {
     }
 
     private String[] openURI() {
-        String[] uris = {
+        return new String[]{
                 "/swagger-ui/**",
                 "/swagger-resources/**",
                 "/v3/api-docs/**",
@@ -65,20 +64,17 @@ public class SecurityConfig {
                 "/api/v1/user/apple/sign-in",
                 "/api/v1/user/apple/sign-up"
         };
-        return uris;
     }
 
     private String[] userURI(){
-        String[] uris = {
+        return new String[]{
                "/api/**"
         };
-        return uris;
     }
 
     private String[] adminURI(){
-        String[] uris = {
+        return new String[]{
         };
-        return uris;
     }
 
 

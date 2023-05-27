@@ -1,1 +1,0 @@
-insert into stone.user (id, reg_date, upd_date, apple_id, auth_type, email, google_id, name, use_flag) values (1, SYSDATE(), SYSDATE(), '1234', 'USER', 'user@test.co.kr', '1234', '테스트', true);

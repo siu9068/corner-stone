@@ -2,9 +2,9 @@ package kr.cornerstone.domain.user;
 
 import kr.cornerstone.domain.auth.AuthService;
 import kr.cornerstone.domain.user.enums.AuthType;
-import kr.cornerstone.domain.user.payload.AppleLoginRequest;
+import kr.cornerstone.domain.user.payload.AppleSignInRequest;
 import kr.cornerstone.domain.user.payload.AppleSignUpRequest;
-import kr.cornerstone.domain.user.payload.GoogleLoginRequest;
+import kr.cornerstone.domain.user.payload.GoogleSignInRequest;
 import kr.cornerstone.domain.user.payload.GoogleSignUpRequest;
 import kr.cornerstone.global.config.jwt.JwtUtil;
 import kr.cornerstone.global.enums.UseType;
@@ -24,9 +24,8 @@ public class UserServiceImpl implements UserService {
     private static final Boolean USE = true;
 
     @Override
-    @Transactional
-    public AuthResponse googleLogin(GoogleLoginRequest googleLoginRequest) {
-        User user = userRepository.findByGoogleIdAndUseFlag(googleLoginRequest.getGoogleId(), UseType.USE.getIsUse())
+    public AuthResponse googleSignIn(GoogleSignInRequest googleSignInRequest) {
+        User user = userRepository.findByGoogleIdAndUseFlag(googleSignInRequest.getGoogleId(), UseType.USE.getIsUse())
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 회원 정보가 없습니다."));
         return authService.getAuthResponse(user, jwtUtil, userRepository);
     }
@@ -70,9 +69,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AuthResponse appleLogin(AppleLoginRequest appleLoginRequest) {
-        User user = userRepository.findByAppleIdAndUseFlag(appleLoginRequest.getAppleId(), UseType.USE.getIsUse())
+    public AuthResponse appleSignIn(AppleSignInRequest appleSignInRequest) {
+        User user = userRepository.findByAppleIdAndUseFlag(appleSignInRequest.getAppleId(), UseType.USE.getIsUse())
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 회원 정보가 없습니다."));
         return authService.getAuthResponse(user, jwtUtil, userRepository);
+    }
+
+    @Override
+    @Transactional
+    public void MembershipCancellation(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("일치하는 회원 정보가 없습니다."));
+        user.membershipCancellation();
+        userRepository.save(user);
     }
 }

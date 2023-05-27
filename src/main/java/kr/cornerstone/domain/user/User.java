@@ -1,6 +1,7 @@
 package kr.cornerstone.domain.user;
 
 import jakarta.persistence.*;
+import kr.cornerstone.global.enums.UseType;
 import kr.cornerstone.global.model.BaseDateTime;
 import kr.cornerstone.domain.user.enums.AuthType;
 import lombok.AllArgsConstructor;
@@ -45,5 +46,9 @@ public class User extends BaseDateTime {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public void membershipCancellation() {
+        this.useFlag = UseType.NOT_USE.getIsUse();
     }
 }
